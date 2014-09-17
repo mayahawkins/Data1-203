@@ -1,16 +1,23 @@
 interface BST {
 	public int cardinality();
 	public boolean member (int x);
+	public BST_MT empty();
+	public boolean isEmpyHuh(BST);
 }
 
 class BST_MT implements BST{
 	BST_MT() { };
 
-
 	public int cardinality(){
 		return 0;
 	}
 	public boolean member (int x){
+		return false;
+	}
+	public BST_MT empty(){
+		return new BST_MT();
+	}
+	public boolean isEmpyHuh(BST_MT){
 		return false;
 	}
 }
@@ -40,6 +47,14 @@ class BST_Node implements BST {
 		}
 		else {return this.right.member(x);}
 	}
+	public BST_MT empty(){
+		return new BST_MT();
+	}
+
+	public boolean isEmpyHuh(BST_Node){
+		return true;
+	}
+
 
 }
 
