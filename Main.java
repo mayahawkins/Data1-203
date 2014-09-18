@@ -2,17 +2,17 @@ interface BST {
 	public int cardinality();
 	public boolean member (int x);
 	public BST empty();
-	public boolean isEmpyHuh(BST);
+	public boolean isEmpyHuh();
 	public BST add(int x);
 	public BST remove(int x);
-
+	public BST union(BST t);
 }
 
 class BST_MT implements BST{
 	BST_MT() { };
 
 	public int cardinality(){
-		return 0;add
+		return 0;
 	}
 
 	public boolean member (int x){
@@ -23,19 +23,22 @@ class BST_MT implements BST{
 		return new BST_MT();
 	}
 
-	public boolean isEmpyHuh(BST_MT){
-		return false;
+	public boolean isEmpyHuh(){
+		return true;
 	}
 
 
 	public BST add(int x){
-	return new BST(new BST_MT(), int x, new BST_MT());
+	return new BST_Node(new BST_MT(), x, new BST_MT());
 	}
 
 	public BST remove (int x) {
 		return new BST_MT();
 	}
 
+	public BST union(BST t){
+		return t;
+	}
 }
 
 
@@ -69,36 +72,47 @@ class BST_Node implements BST {
 		return new BST_MT();
 	}
 
-	public boolean isEmpyHuh(BST_Node){
-		return true;
+	public boolean isEmpyHuh(){
+		return false;
 	}
 
 	public BST add(int x){
 		if (x == this.here) {
-			return new BST(this.left, this.here, this.right);
+			return new BST_Node(this.left, this.here, this.right);
 		}
 		else if (x < this.here) {
-		return new BST_Node(this.left.add(x), this.here, this.right)
+		return new BST_Node(this.left.add(x), this.here, this.right);
 		}
-		else {return new BST_Node(this.left, this.here this.right.add(x))
+		else {return new BST_Node(this.left, this.here, this.right.add(x));
 		}
 	}
 
 	public BST remove(int x){
 		if (x == this.here) {
-			return new BST_Node(this.left, this.right, this.right.right);
+			return this.left.union(right);
 		}
 		else if (x < this.here) {
 			return new BST_Node(this.left.remove(x), this.here, this.right);
 		}
-		else {return new BST_Node(this.left, this,here, this.right.remove(x));
+		else {return new BST_Node(this.left, this.here, this.right.remove(x));
 		}
+	}
+
+	public BST union(BST t){
+		return this.left.union(this.right).union(t).add(this.here);
 	}
 }
 
 class Main {
 	public static void main ( String [] args ) {
 		System.out.println("Hey!");
-
-	}
+		//BSTs
+		BST b_mt = new BST_MT();
+		BST b_1 = new BST_Node(b_mt, 1, b_mt);
+		BST b_5 = new BST_Node(b_1, 5, b_mt);
+		System.out.println(b_mt.isEmpyHuh() + " should be " + true);
+		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
+		System.out.println("Hey Hey");
+	System.out.println(b_mt.add(3).remove(3).isEmpyHuh() + " should be " + true);
+	}	
 }
