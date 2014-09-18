@@ -1,0 +1,92 @@
+;;; =======================================
+;;;  CMPU-365, Fall 2014
+;;;  Asmt 1 
+;;;  Maya T. Hawkins
+;;; =======================================
+
+(load "asmt-helper")
+
+(problem "1:  INSERT-NUMS")
+
+(defun insert
+  (num tree)
+    (cond
+
+      ;; Base Case:  TREE is empty.
+      ((mt-tree? tree)
+       ;; Create a new tree with one node, where DATUM = NUM.
+       (make-node :lefty *mt-tree* :datum num :righty *mt-tree*))
+      
+      ;; NOTE:  In the rest of the cases, TREE is assumed to be
+      ;;        non-empty (i.e., an instance of the NODE struct).
+      
+      ;; Base Case 2:  NUM = DATUM at root of TREE
+      ;;  (i.e., NUM is already in the TREE)
+      ((= num (node-datum tree))
+       ;; Return the TREE unchanged...
+       tree)
+      
+      ;; Recursive Case 1:  NUM < DATUM at root of TREE
+      ((< num (node-datum tree))
+       ;; Return a tree just like TREE, except that NUM
+       ;; is inserted into left-hand sub-tree
+       (make-node :lefty (insert num (node-lefty tree))
+                  :datum (node-datum tree)
+                  :righty (node-righty tree)))
+      
+      ;; Recursive Case 2:  NUM > DATUM at root of TREE
+      (T
+       ;; Return a tree just like TREE, except that NUM
+       ;; is inserted into right-hand sub-tree
+       (make-node :lefty (node-lefty tree)
+                  :datum (node-datum tree)
+                  :righty (insert num (node-righty tree))))))
+
+(defun insert-nums
+  (nums tree)
+    (cond
+      ;; Base Case:  No more NUMS to insert
+      ((null nums)
+       ;; Return accumulated tree!
+       tree)
+      
+      ;; Recursive Case: 
+      (T
+       ;; Insert the REST of the NUMS into the tree
+       ;; that results from inserting FIRST NUM into TREE
+       (insert-nums (rest nums) 
+                    (insert (first nums) tree)))))
+
+(defun create-bin-tree
+  (nums)
+    (insert-nums nums *mt-tree*))
+
+(defun gen-depth-first-listing-acc
+  (tree acc)
+    (cond
+      ;; Base Case:  TREE is empty, so return the accumulator
+      ((mt-tree? tree)
+       acc)
+      
+      ;; Recursive Case:  TREE is non-empty (i.e., it's a NODE struct)
+      (T
+       ;; So... accumulate the nodes from the right-hand sub-tree
+       ;; and then feed those in as the initial accumulator when
+       ;; accumulating the nodes in the left-hand sub-tree.
+       ;; Oh, and don't forget about the DATUM at *this* node!
+       (gen-depth-first-listing-acc
+        (node-righty tree)
+        (gen-depth-first-listing-acc  (node-lefty tree)
+                                      (cons (node-datum tree) acc))))))
+
+(defun gen-depth-first-listing
+  (tree)
+    ;; Just call the accumulator-based helper with the accumulator
+    ;; initially empty --- oh, and reverse the order!
+  (reverse (gen-depth-first-listing-acc tree ())))
+
+(tester '(gen-depth-first-listing *mt-tree*))
+(tester '(gen-depth-first-listing (create-bin-tree '(1 2 3 4))))
+(tester '(gen-depth-first-listing (create-bin-tree '(4 3 2 1))))
+(tester '(gen-depth-first-listing (create-bin-tree '(2 4 3 1))))
+(tester '(gen-depth-first-listing big-tree))

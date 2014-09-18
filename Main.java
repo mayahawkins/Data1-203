@@ -1,25 +1,35 @@
 interface BST {
 	public int cardinality();
 	public boolean member (int x);
-	public BST_MT empty();
+	public BST empty();
 	public boolean isEmpyHuh(BST);
+	public BST add(int x);
+
 }
 
 class BST_MT implements BST{
 	BST_MT() { };
 
 	public int cardinality(){
-		return 0;
+		return 0;add
 	}
 	public boolean member (int x){
 		return false;
 	}
-	public BST_MT empty(){
+	public BST empty(){
 		return new BST_MT();
 	}
 	public boolean isEmpyHuh(BST_MT){
 		return false;
 	}
+
+
+	public BST add(int x){
+	return new BST(BST_MT(), int x, BST_MT());
+	}
+
+
+
 }
 
 
@@ -47,15 +57,22 @@ class BST_Node implements BST {
 		}
 		else {return this.right.member(x);}
 	}
-	public BST_MT empty(){
+	public BST empty(){
 		return new BST_MT();
 	}
 
 	public boolean isEmpyHuh(BST_Node){
 		return true;
 	}
-
-
+	public BST add(int x){
+		if (x == this.here) {
+			return new BST(this.left, this.here, this.right);
+		}
+		else if (x < this.here) {
+		return new BST_Node(this.left.add(x), this.here, this.right)
+		}
+		else {return new BST_Node(this.left, this.here this.right.add(x))}
+	}
 }
 
 class Main {
