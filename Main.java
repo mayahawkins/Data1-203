@@ -2,7 +2,7 @@ interface BST {
 	public int cardinality();
 	public boolean member (int x);
 	public BST empty();
-	public boolean isEmpyHuh();
+	public boolean isEmptyHuh();
 	public BST add(int x);
 	public BST remove(int x);
 	public BST union(BST t);
@@ -27,7 +27,7 @@ class BST_MT implements BST{
 		return new BST_MT();
 	}
 
-	public boolean isEmpyHuh(){
+	public boolean isEmptyHuh(){
 		return true;
 	}
 
@@ -51,7 +51,7 @@ class BST_MT implements BST{
 		return new BST_MT();
 	}
 	public boolean equal(BST t){
-		if(t.isEmptyHuh()){
+		if (t.isEmptyHuh()){
 			return true;
 		}
 		else {
@@ -59,7 +59,7 @@ class BST_MT implements BST{
 		}
 	}
 
-	public boolean subset(t){
+	public boolean subset(BST t){
 		return true;
 	}
 }
@@ -95,7 +95,7 @@ class BST_Node implements BST {
 		return new BST_MT();
 	}
 
-	public boolean isEmpyHuh(){
+	public boolean isEmptyHuh(){
 		return false;
 	}
 
@@ -152,7 +152,15 @@ class BST_Node implements BST {
 	}
 
 	public boolean subset(BST t){
-
+	if (this.cardinality() < t.cardinality()){
+		return false;
+	}
+	else if (t.member(this.here)) {
+		return this.equal(t);
+	}
+	else{
+		return this.left.union(this.right).subset(t);
+		}
 	}
 }
 
@@ -164,10 +172,10 @@ class Main {
 		BST b_1 = new BST_Node(b_mt, 1, b_mt);
 		BST b_5 = new BST_Node(b_1, 5, b_mt);
 		BST b_4 = new BST_Node(b_mt, 4, b_mt);
-		System.out.println(b_mt.isEmpyHuh() + " should be " + true);
+		System.out.println(b_mt.isEmptyHuh() + " should be " + true);
 		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
 		System.out.println("Hey Hey");
-		System.out.println(b_mt.add(3).remove(3).isEmpyHuh() + " should be " + true);
+		System.out.println(b_mt.add(3).remove(3).isEmptyHuh() + " should be " + true);
 		System.out.println(b_4.union(b_5).cardinality() + " should be " + 3);
 		System.out.println(b_4.union(b_mt).cardinality() + " should be " + 1);
 		System.out.println(b_5.inter(b_5).cardinality() + " should be " + 2); 
