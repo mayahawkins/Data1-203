@@ -7,6 +7,8 @@ interface BST {
 	public BST remove(int x);
 	public BST union(BST t);
 	public BST inter(BST t);
+	public BST differ(BST t);
+	public BST equal(BST t);
 }
 
 class BST_MT implements BST{
@@ -44,6 +46,17 @@ class BST_MT implements BST{
 		return new BST_MT();
 	}
 
+	public BST differ(BST t) {
+		return new BST_MT();
+	}
+	public BST equal(BST t){
+		if(t.isEmpyHuh()){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 
 
@@ -111,7 +124,17 @@ class BST_Node implements BST {
 		if (t.member(this.here)) {
 			return new BST_Node(this.left.inter(t), this.here, this.right.inter(t));
 		}
-		else {return this.left.union(this.right).inter(t);}
+		else {
+			return this.left.union(this.right).inter(t);}
+	}
+
+	public BST differ(BST t){
+		if(t.member(this.here)) {
+			return this.left.union(this.right).differ(t);
+		}
+		else { 
+			return new BST_Node(this.left.differ(t), this.here, this.right.differ(t));
+		}
 	}
 }
 
