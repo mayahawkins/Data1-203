@@ -161,6 +161,7 @@ class BST_Node implements BST {
 
 class Main {
 
+	//Work to allow ability to generate random numbers and BST
 	static Random rand = new Random();
     public static int randomInt( int min, int max ) {
         return rand.nextInt((max - min) + 1) + min; }
@@ -179,6 +180,8 @@ class Main {
 		return starter_bst;
 	}
 
+	//First Property: if a number is added and removed to a BST, the cardinality
+	//of the BST will wither the the same as when it first started or one less.
 	public static void addRemEq(BST t, int x){
 		BST save_bst = t;
 		if (t.member(x)) {
@@ -193,6 +196,7 @@ class Main {
 		}
 	}
 
+	//Function to allow multiple random calls of addRemEq function
 	public static void addRemEqRepeat(){
 		int count = randomInt(0, 100); 
 		while(count != 0){
@@ -200,6 +204,9 @@ class Main {
 			count = count - 1;
 		}
 	}
+
+	//Second Property: if the inter of some BST u and t and the difference of u and t
+	//are unionized,, they will be the same length as u.
 
 	public static void inDiffCar(BST u, BST t) {
 		BST save_u = u;
@@ -211,6 +218,7 @@ class Main {
 		}
 	}
 
+	//Function to allow multiple random calls of inDiffCar
 	public static void inDiffCarRepeat(){
 		int count = randomInt(0, 100);
 		while(count != 0){
@@ -219,12 +227,15 @@ class Main {
 		}
 	}
 
+	//Third Property: the cardinality of the union of two BST are the same as
+	//the sum of the cardinalities of each BST individually
 	public static void unionAndCard(BST u, BST t){
 		if(u.union(t).cardinality() == u.cardinality() + t.cardinality()) {
 			System.out.println("unionAndCard Property holds");
 		}
 	}
 
+	//Function to allow multiple random calls for unionAndCard
 	public static void unionAndCardRepeat(){
 		int count = randomInt(0, 100);
 		while(count != 0) {
@@ -233,6 +244,8 @@ class Main {
 		}
 	}
 
+	//Fourth Property: If t is a subset of u, then the cardinality
+	//of the inter between u and t will equal the cardinality of t 
 	public static void subCard(BST u, BST t) {
 		BST save_t = t;
 
@@ -246,6 +259,7 @@ class Main {
 		}
 	}
 
+	//Function allows for multiple random calls on subCard
 	public static void subCardRepeat(){
 		int count = randomInt(0, 100);
 		while(count != 0){
@@ -254,7 +268,8 @@ class Main {
 		}
 	}
 
-
+	//Not a property function.  Just used to either add or remove an element from a BST
+	//Depending on if the element is in the BST or not
 	public static void addOrRem(BST t, int x) {
 		if (t.member(x)) {
 			System.out.println(x + " is a member of t, if removed, member would call " + t.remove(x).member(x));
@@ -266,14 +281,15 @@ class Main {
 	
 
 	public static void main ( String [] args ) {
-		//BSTs
+		//BSTs for tests
 		BST b_mt = new BST_MT();
 		BST b_1 = new BST_Node(b_mt, 1, b_mt);
 		BST b_5 = new BST_Node(b_1, 5, b_mt);
 		BST b_4 = new BST_Node(b_mt, 4, b_mt);
 		BST b_3 = new BST_Node(b_mt, 3, b_4);
 
-		
+		System.out.println("   ");
+
 		//isEmptyHuh and cardinality testers
 		System.out.println(b_mt.isEmptyHuh() + " should be " + true);
 		System.out.println(b_mt.cardinality() + " should be " + 0);
@@ -281,36 +297,53 @@ class Main {
 		System.out.println(b_5.cardinality() + " should be " + 2);
 
 		System.out.println("   ");
+
 		//addRemEq testers
 		addRemEq(b_3, 6);
+
 		System.out.println("   ");
+
 		addRemEq(b_5, 6);
+
 		System.out.println("   ");
+
 		addRemEq(b_5, 5);
+
 		System.out.println("   ");
+
 		addRemEqRepeat();
+
 		System.out.println("   ");
 
 
 		//inDiffCar testers
 		inDiffCar(b_5, b_1);
 		inDiffCarRepeat();
+
 		System.out.println("   ");
 
 		//unionAndCard testers
 		unionAndCard(b_mt, b_mt);
 		unionAndCard(b_mt, b_3);
 		unionAndCardRepeat();
+
 		System.out.println("   ");
 
+		//subCard testers
+		subCard(b_5, b_1);
+		subCard(randBST(100), randBST(5));
+		subCardRepeat();
+
+		System.out.println("   ");	
 
 		//add and remove only with member testers
 		addOrRem(b_5, 5);
 		addOrRem(b_5, 2);
+		addOrRem(randBST(30), randomInt(0, 40);
+		System.out.println("   ");
 
-
+		//Other random tests
 		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
-
 		System.out.println(b_4.union(b_5).cardinality() + " should be " + 3);
 		System.out.println(b_4.union(b_mt).cardinality() + " should be " + 1);
 		System.out.println(b_5.inter(b_5).cardinality() + " should be " + 2); 
@@ -320,8 +353,6 @@ class Main {
 		System.out.println(b_5.subset(b_4.union(b_5)) + " should be " + true);
 
 
-		subCard(b_5, b_1);
-		subCard(randBST(100), randBST(5));
-		subCardRepeat();
+
 	}	
 }
