@@ -162,7 +162,8 @@ class Main {
 	public static void addRemEq(BST t, int x){
 		BST save_bst = t;
 		if (t.member(x)) {
-			System.out.println(x + " is a member of t choose a different number");
+			int difference = t.cardinality() - t.add(x).remove(x).cardinality();
+			System.out.println(x +  " in input, output is " + difference + " less than input");
 		}
 		else if (t.add(x).remove(x).equal(save_bst)) {
 			System.out.println("The input equals the output");
