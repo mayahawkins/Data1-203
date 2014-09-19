@@ -159,22 +159,63 @@ class BST_Node implements BST {
 	else if (t.member(this.here) && this.left.union(this.right).subset(t.remove(this.here))) {
 		return true;
 	}
-	
 	else {
 		return this.left.union(this.right).subset(t);
 		}
 	}
 }
 
+
+class CS203{
+	public static void addRemEq(BST t, int x){
+		BST save_bst = t;
+		if (t.add(x).remove(x).equal(save_bst)) {
+			System.out.println("The input equals the output");
+		}
+		else {
+			System.out.println("The input does not equal the output");
+		}
+	}
+
+	public static void main ( String [] args ) {
+
+		BST b_mt = new BST_MT();
+		BST b_3 = new BST_Node(b_mt, 3, b_mt);
+		BST b_happy = new BST_Node(b_3, 7, b_mt);
+
+		addRemEq(b_3, 6);
+	}
+
+
+
+}
+
 class Main {
 	public static void main ( String [] args ) {
-		System.out.println("Hey!");
 		//BSTs
 		BST b_mt = new BST_MT();
 		BST b_1 = new BST_Node(b_mt, 1, b_mt);
 		BST b_5 = new BST_Node(b_1, 5, b_mt);
 		BST b_4 = new BST_Node(b_mt, 4, b_mt);
+
+
+
+		//isEmptyHuh and cardinality testers
 		System.out.println(b_mt.isEmptyHuh() + " should be " + true);
+		System.out.println(b_mt.cardinality() + " should be " + 0);
+		System.out.println(b_5.isEmptyHuh() + " should be " + false);
+		System.out.println(b_5.cardinality() + " should be " + 2);
+
+
+		//add, remove, and equality tester
+		//public boolean addRemEq(int x){
+	//		BST save_bst = this;
+	//		return this.add(x).remove(x).equal(save_bst);
+	//	}
+
+
+	//	addRemEq(b_5, 6);
+
 		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
 		System.out.println("Hey Hey");
 		System.out.println(b_mt.add(3).remove(3).isEmptyHuh() + " should be " + true);
