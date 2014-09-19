@@ -155,8 +155,8 @@ class BST_Node implements BST {
 	if (this.cardinality() < t.cardinality()){
 		return false;
 	}
-	else if (t.member(this.here)) {
-		return this.equal(t);
+	else if (t.member(this.here) && this.equal(t)) {
+		return true;
 	}
 	else{
 		return this.left.union(this.right).subset(t);
