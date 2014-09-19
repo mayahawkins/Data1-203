@@ -6,6 +6,7 @@ interface BST {
 	public BST add(int x);
 	public BST remove(int x);
 	public BST union(BST t);
+	public BST inter(BST t);
 }
 
 class BST_MT implements BST{
@@ -27,7 +28,6 @@ class BST_MT implements BST{
 		return true;
 	}
 
-
 	public BST add(int x){
 	return new BST_Node(new BST_MT(), x, new BST_MT());
 	}
@@ -39,6 +39,11 @@ class BST_MT implements BST{
 	public BST union(BST t){
 		return t;
 	}
+
+	public BST inter(BST t) {
+		return new BST_MT();
+	}
+
 }
 
 
@@ -101,6 +106,13 @@ class BST_Node implements BST {
 	public BST union(BST t){
 		return this.left.union(this.right).union(t).add(this.here);
 	}
+
+	public BST inter(BST t){
+		if (t.member(this.here)) {
+			return new BST_Node(this.left.inter(t), this.here, this.right.inter(t));
+		}
+		else {return this.left.union(this.right).inter(t);}
+	}
 }
 
 class Main {
@@ -110,9 +122,13 @@ class Main {
 		BST b_mt = new BST_MT();
 		BST b_1 = new BST_Node(b_mt, 1, b_mt);
 		BST b_5 = new BST_Node(b_1, 5, b_mt);
+		BST b_4 = new BST_Node(b_mt, 4, b_mt);
 		System.out.println(b_mt.isEmpyHuh() + " should be " + true);
 		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
 		System.out.println("Hey Hey");
-	System.out.println(b_mt.add(3).remove(3).isEmpyHuh() + " should be " + true);
+		System.out.println(b_mt.add(3).remove(3).isEmpyHuh() + " should be " + true);
+		System.out.println(b_4.union(b_5).cardinality() + " should be " + 3);
+		System.out.println(b_4.union(b_mt).cardinality() + " should be " + 1);
+		System.out.println(b_5.inter(b_5).cardinality() + " should be " + 2); 
 	}	
 }
