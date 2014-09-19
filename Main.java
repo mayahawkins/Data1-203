@@ -191,6 +191,15 @@ class Main {
 		}
 	}
 
+	public static void addOrRem(BST t, int x) {
+		if (t.member(x)) {
+			System.out.println(x + " is a member of t, if removed, member would call " + t.remove(x).member(x));
+		}
+		else{ 
+			System.out.println(x + " is not a member of t, if added, member would call " + t.add(x).member(x));
+		}
+	}
+
 	public static void main ( String [] args ) {
 		//BSTs
 		BST b_mt = new BST_MT();
@@ -218,9 +227,13 @@ class Main {
 		inDiffCar(b_5, b_1);
 
 
+		//add and remove only with member testers
+		addOrRem(b_5, 5);
+		addOrRem(b_5, 2);
+
+
 		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
-		System.out.println("Hey Hey");
-		System.out.println(b_mt.add(3).remove(3).isEmptyHuh() + " should be " + true);
+
 		System.out.println(b_4.union(b_5).cardinality() + " should be " + 3);
 		System.out.println(b_4.union(b_mt).cardinality() + " should be " + 1);
 		System.out.println(b_5.inter(b_5).cardinality() + " should be " + 2); 
