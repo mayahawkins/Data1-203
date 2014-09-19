@@ -170,11 +170,24 @@ class Main {
 
 	public static void addRemEq(BST t, int x){
 		BST save_bst = t;
-		if (t.add(x).remove(x).equal(save_bst)) {
+		if (t.member(x)) {
+			System.out.println(x + " is a member of t choose a different number");
+		}
+		else if (t.add(x).remove(x).equal(save_bst)) {
 			System.out.println("The input equals the output");
 		}
 		else {
 			System.out.println("The input does not equal the output");
+		}
+	}
+
+	public static void inDiffCar(BST u, BST t) {
+		BST save_u = u;
+		if (u.inter(t).union(u.differ(t)).equal(save_u)) {
+			System.out.println("Property calls true");
+		}
+		else {
+			System.out.println("Property failed");
 		}
 	}
 
@@ -184,7 +197,8 @@ class Main {
 		BST b_1 = new BST_Node(b_mt, 1, b_mt);
 		BST b_5 = new BST_Node(b_1, 5, b_mt);
 		BST b_4 = new BST_Node(b_mt, 4, b_mt);
-
+		BST b_3 = new BST_Node(b_mt, 3, b_mt);
+		BST b_happy = new BST_Node(b_3, 7, b_mt);
 
 
 		//isEmptyHuh and cardinality testers
@@ -193,18 +207,16 @@ class Main {
 		System.out.println(b_5.isEmptyHuh() + " should be " + false);
 		System.out.println(b_5.cardinality() + " should be " + 2);
 
-
-		//add, remove, and equality tester
-		//public boolean addRemEq(int x){
-	//		BST save_bst = this;
-	//		return this.add(x).remove(x).equal(save_bst);
-	//	}
-
-		BST b_3 = new BST_Node(b_mt, 3, b_mt);
-		BST b_happy = new BST_Node(b_3, 7, b_mt);
-
+		
+		//addRemEq testers
 		addRemEq(b_3, 6);
-	//	addRemEq(b_5, 6);
+		addRemEq(b_5, 6);
+		addRemEq(b_5, 5);
+
+
+		//inDiffCar testers
+		inDiffCar(b_5, b_1);
+
 
 		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
 		System.out.println("Hey Hey");
