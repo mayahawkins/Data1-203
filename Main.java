@@ -220,7 +220,7 @@ class Main {
 
 	//Function to allow multiple random calls of inDiffCar
 	public static void inDiffCarRepeat(){
-		int count = randomInt(0, 100);
+		int count = randomInt(0, 30);
 		while(count != 0){
 			inDiffCar(randBST(20), randBST(40));
 			count = count - 1;
@@ -237,7 +237,7 @@ class Main {
 
 	//Function to allow multiple random calls for unionAndCard
 	public static void unionAndCardRepeat(){
-		int count = randomInt(0, 100);
+		int count = randomInt(0, 30);
 		while(count != 0) {
 			unionAndCard(randBST(), randBST());
 			count = count - 1; 
@@ -261,7 +261,7 @@ class Main {
 
 	//Function allows for multiple random calls on subCard
 	public static void subCardRepeat(){
-		int count = randomInt(0, 100);
+		int count = randomInt(0, 30);
 		while(count != 0){
 			subCard(randBST(100), randBST(10));
 			count = count - 1;
@@ -339,7 +339,7 @@ class Main {
 		//add and remove only with member testers
 		addOrRem(b_5, 5);
 		addOrRem(b_5, 2);
-		addOrRem(randBST(30), randomInt(0, 40);
+		addOrRem(randBST(30), randomInt(0, 40));
 		System.out.println("   ");
 
 		//Other random tests
