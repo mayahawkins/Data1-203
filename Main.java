@@ -60,11 +60,7 @@ class BST_MT implements BST{
 	}
 
 	public boolean subset(BST t){
-		if (t.isEmptyHuh()){
-			return true;
-		}
-		else {return false;
-		}
+		return true;
 	}
 }
 
@@ -157,12 +153,13 @@ class BST_Node implements BST {
 
 	public boolean subset(BST t){
 	
-	if (t.member(this.here) && this.left.union(this.right).subset(t.remove(this.here))) {
-		return true;
-	}
-	else if (this.cardinality() < t.cardinality()){
+	if (this.cardinality() < t.cardinality()){
 		return false;
 	}
+	else if (t.member(this.here) && this.left.union(this.right).subset(t.remove(this.here))) {
+		return true;
+	}
+	
 	else {
 		return this.left.union(this.right).subset(t);
 		}
