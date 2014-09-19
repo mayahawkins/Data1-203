@@ -60,7 +60,11 @@ class BST_MT implements BST{
 	}
 
 	public boolean subset(BST t){
-		return true;
+		if (t.isEmptyHuh()){
+			return true;
+		}
+		else {return false;
+		}
 	}
 }
 
