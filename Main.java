@@ -9,6 +9,7 @@ interface BST {
 	public BST inter(BST t);
 	public BST differ(BST t);
 	public boolean equal(BST t);
+	public boolean subset(BST t);
 }
 
 class BST_MT implements BST{
@@ -50,12 +51,16 @@ class BST_MT implements BST{
 		return new BST_MT();
 	}
 	public boolean equal(BST t){
-		if(t.isEmpyHuh()){
+		if(t.isEmptyHuh()){
 			return true;
 		}
 		else {
 			return false;
 		}
+	}
+
+	public boolean subset(t){
+		return true;
 	}
 }
 
@@ -139,11 +144,15 @@ class BST_Node implements BST {
 
 	public boolean equal(BST t){
 		if(t.member(this.here)) {
-			return this.left.union(this.right).equal(t);
+			return this.left.union(this.right).equal(t.remove(this.here));
 		}
 		else {
 			return false;
 		}
+	}
+
+	public boolean subset(BST t){
+
 	}
 }
 
