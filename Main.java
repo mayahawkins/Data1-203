@@ -156,13 +156,14 @@ class BST_Node implements BST {
 	}
 
 	public boolean subset(BST t){
-	if (this.cardinality() < t.cardinality()){
-		return false;
-	}
-	else if (t.member(this.here) && this.equal(t)) {
+	
+	if (t.member(this.here) && this.left.union(this.right).subset(t.remove(this.here))) {
 		return true;
 	}
-	else{
+	else if (this.cardinality() < t.cardinality()){
+		return false;
+	}
+	else {
 		return this.left.union(this.right).subset(t);
 		}
 	}
@@ -183,5 +184,10 @@ class Main {
 		System.out.println(b_4.union(b_5).cardinality() + " should be " + 3);
 		System.out.println(b_4.union(b_mt).cardinality() + " should be " + 1);
 		System.out.println(b_5.inter(b_5).cardinality() + " should be " + 2); 
+		System.out.println(b_mt.subset(b_mt) + " should be " + true);
+		System.out.println(b_5.subset(b_1) + " should be " + true);
+		System.out.println(b_1.subset(b_5) +  " should be " + false);
+		System.out.println(b_4.union(b_5).subset(b_5) + " should be " + true);
+
 	}	
 }
