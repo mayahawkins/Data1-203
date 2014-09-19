@@ -166,7 +166,8 @@ class BST_Node implements BST {
 }
 
 
-class CS203{
+class Main {
+
 	public static void addRemEq(BST t, int x){
 		BST save_bst = t;
 		if (t.add(x).remove(x).equal(save_bst)) {
@@ -177,20 +178,6 @@ class CS203{
 		}
 	}
 
-	public static void main ( String [] args ) {
-
-		BST b_mt = new BST_MT();
-		BST b_3 = new BST_Node(b_mt, 3, b_mt);
-		BST b_happy = new BST_Node(b_3, 7, b_mt);
-
-		addRemEq(b_3, 6);
-	}
-
-
-
-}
-
-class Main {
 	public static void main ( String [] args ) {
 		//BSTs
 		BST b_mt = new BST_MT();
@@ -213,7 +200,10 @@ class Main {
 	//		return this.add(x).remove(x).equal(save_bst);
 	//	}
 
+		BST b_3 = new BST_Node(b_mt, 3, b_mt);
+		BST b_happy = new BST_Node(b_3, 7, b_mt);
 
+		addRemEq(b_3, 6);
 	//	addRemEq(b_5, 6);
 
 		System.out.println(b_5.add( 2 ).member(2) + " should be " + true);
