@@ -178,7 +178,7 @@ class Main {
 		}
 		return starter_bst;
 	}
-	
+
 	public static void addRemEq(BST t, int x){
 		BST save_bst = t;
 		if (t.member(x)) {
@@ -193,32 +193,21 @@ class Main {
 		}
 	}
 
-	public static void inDiffCar(BST u, BST t) {
-		BST save_u = u;
-		if (u.inter(t).union(u.differ(t)).equal(save_u)) {
-			System.out.println("Property calls true");
-		}
-		else {
-			System.out.println("Property failed");
-		}
-	}
-
-	public static void addOrRem(BST t, int x) {
-		if (t.member(x)) {
-			System.out.println(x + " is a member of t, if removed, member would call " + t.remove(x).member(x));
-		}
-		else{ 
-			System.out.println(x + " is not a member of t, if added, member would call " + t.add(x).member(x));
-		}
-	}
-	
-
-
 	public static void addRemEqRepeat(){
 		int count = randomInt(0, 100); 
 		while(count != 0){
 			addRemEq(randBST(), randomInt(0, 75));
 			count = count - 1;
+		}
+	}
+
+	public static void inDiffCar(BST u, BST t) {
+		BST save_u = u;
+		if (u.inter(t).union(u.differ(t)).equal(save_u)) {
+			System.out.println("inDiffCar Property calls true");
+		}
+		else {
+			System.out.println("Property failed");
 		}
 	}
 
@@ -230,7 +219,51 @@ class Main {
 		}
 	}
 
+	public static void unionAndCard(BST u, BST t){
+		if(u.union(t).cardinality() == u.cardinality() + t.cardinality()) {
+			System.out.println("unionAndCard Property holds");
+		}
+	}
 
+	public static void unionAndCardRepeat(){
+		int count = randomInt(0, 100);
+		while(count != 0) {
+			unionAndCard(randBST(), randBST());
+			count = count - 1; 
+		}
+	}
+
+	public static void subCard(BST u, BST t) {
+		BST save_t = t;
+
+		if (t.subset(u)){
+			if(u.inter(t).cardinality() == save_t.cardinality()){
+				System.out.println("subCard Property holds true");
+			}
+		}
+		else {
+			System.out.println("subCard Property is false");
+		}
+	}
+
+	public static void subCardRepeat(){
+		int count = randomInt(0, 100);
+		while(count != 0){
+			subCard(randBST(100), randBST(10));
+			count = count - 1;
+		}
+	}
+
+
+	public static void addOrRem(BST t, int x) {
+		if (t.member(x)) {
+			System.out.println(x + " is a member of t, if removed, member would call " + t.remove(x).member(x));
+		}
+		else{ 
+			System.out.println(x + " is not a member of t, if added, member would call " + t.add(x).member(x));
+		}
+	}
+	
 
 	public static void main ( String [] args ) {
 		//BSTs
@@ -262,6 +295,13 @@ class Main {
 		//inDiffCar testers
 		inDiffCar(b_5, b_1);
 		inDiffCarRepeat();
+		System.out.println("   ");
+
+		//unionAndCard testers
+		unionAndCard(b_mt, b_mt);
+		unionAndCard(b_mt, b_3);
+		unionAndCardRepeat();
+		System.out.println("   ");
 
 
 		//add and remove only with member testers
@@ -279,5 +319,9 @@ class Main {
 		System.out.println(b_5.subset(b_1) +  " should be " + false);
 		System.out.println(b_5.subset(b_4.union(b_5)) + " should be " + true);
 
+
+		subCard(b_5, b_1);
+		subCard(randBST(100), randBST(5));
+		subCardRepeat();
 	}	
 }
