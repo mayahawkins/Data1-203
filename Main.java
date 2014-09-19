@@ -1,3 +1,5 @@
+import java.util.Random;
+
 interface BST {
 	public int cardinality();
 	public boolean member (int x);
@@ -159,6 +161,24 @@ class BST_Node implements BST {
 
 class Main {
 
+	static Random rand = new Random();
+    public static int randomInt( int min, int max ) {
+        return rand.nextInt((max - min) + 1) + min; }
+
+
+	public static BST randBST(){
+	return randBST(randomInt(0, 100));
+	}
+
+	public static BST randBST(int counter) {
+		BST starter_bst = new BST_MT();
+		while(counter != 0) {
+			starter_bst.add(randomInt(0, 50));
+			counter = counter - 1;
+		}
+		return starter_bst;
+	}
+	
 	public static void addRemEq(BST t, int x){
 		BST save_bst = t;
 		if (t.member(x)) {
@@ -191,6 +211,26 @@ class Main {
 			System.out.println(x + " is not a member of t, if added, member would call " + t.add(x).member(x));
 		}
 	}
+	
+
+
+	public static void addRemEqRepeat(){
+		int count = randomInt(0, 100); 
+		while(count != 0){
+			addRemEq(randBST(), randomInt(0, 75));
+			count = count - 1;
+		}
+	}
+
+	public static void inDiffCarRepeat(){
+		int count = randomInt(0, 100);
+		while(count != 0){
+			inDiffCar(randBST(20), randBST(40));
+			count = count - 1;
+		}
+	}
+
+
 
 	public static void main ( String [] args ) {
 		//BSTs
@@ -198,25 +238,30 @@ class Main {
 		BST b_1 = new BST_Node(b_mt, 1, b_mt);
 		BST b_5 = new BST_Node(b_1, 5, b_mt);
 		BST b_4 = new BST_Node(b_mt, 4, b_mt);
-		BST b_3 = new BST_Node(b_mt, 3, b_mt);
-		BST b_happy = new BST_Node(b_3, 7, b_mt);
+		BST b_3 = new BST_Node(b_mt, 3, b_4);
 
-
+		
 		//isEmptyHuh and cardinality testers
 		System.out.println(b_mt.isEmptyHuh() + " should be " + true);
 		System.out.println(b_mt.cardinality() + " should be " + 0);
 		System.out.println(b_5.isEmptyHuh() + " should be " + false);
 		System.out.println(b_5.cardinality() + " should be " + 2);
 
-		
+		System.out.println("   ");
 		//addRemEq testers
 		addRemEq(b_3, 6);
+		System.out.println("   ");
 		addRemEq(b_5, 6);
+		System.out.println("   ");
 		addRemEq(b_5, 5);
+		System.out.println("   ");
+		addRemEqRepeat();
+		System.out.println("   ");
 
 
 		//inDiffCar testers
 		inDiffCar(b_5, b_1);
+		inDiffCarRepeat();
 
 
 		//add and remove only with member testers
