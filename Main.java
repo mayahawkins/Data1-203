@@ -163,18 +163,19 @@ class Main {
 
 	//Work to allow ability to generate random numbers and BST
 	static Random rand = new Random();
-    public static int randomInt( int min, int max ) {
-        return rand.nextInt((max - min) + 1) + min; }
+    public static int randomInt(int min, int max) {
+        return rand.nextInt((max - min) + 1) + min;
+    }
 
 
 	public static BST randBST(){
-	return randBST(randomInt(0, 100));
+	return randBST(rand.nextInt(50));
 	}
 
 	public static BST randBST(int counter) {
 		BST starter_bst = new BST_MT();
 		while(counter != 0) {
-			starter_bst.add(randomInt(0, 50));
+			starter_bst.add(randomInt(0, 75));
 			counter = counter - 1;
 		}
 		return starter_bst;
@@ -182,13 +183,13 @@ class Main {
 
 	//First Property: if a number is added and removed to a BST, the cardinality
 	//of the BST will wither the the same as when it first started or one less.
-	public static void addRemEq(BST t, int x){
+	public static void addRemCar(BST t, int x){
 		BST save_bst = t;
 		if (t.member(x)) {
 			int difference = t.cardinality() - t.add(x).remove(x).cardinality();
 			System.out.println(x +  " in input, output is " + difference + " less than input");
 		}
-		else if (t.add(x).remove(x).equal(save_bst)) {
+		else if (t.add(x).remove(x).cardinality() == save_bst.cardinality()) {
 			System.out.println("The input equals the output");
 		}
 		else {
@@ -197,21 +198,21 @@ class Main {
 	}
 
 	//Function to allow multiple random calls of addRemEq function
-	public static void addRemEqRepeat(){
-		int count = randomInt(0, 100); 
+	public static void addRemCarRepeat(){
+		int count = randomInt(0, 30); 
 		while(count != 0){
-			addRemEq(randBST(), randomInt(0, 75));
+			addRemCar(randBST(), randomInt(0, 75));
 			count = count - 1;
 		}
 	}
 
 	//Second Property: if the inter of some BST u and t and the difference of u and t
-	//are unionized,, they will be the same length as u.
+	//are unionized, they will be the same length as u.
 
-	public static void inDiffCar(BST u, BST t) {
+	public static void inDiffEq(BST u, BST t) {
 		BST save_u = u;
 		if (u.inter(t).union(u.differ(t)).equal(save_u)) {
-			System.out.println("inDiffCar Property calls true");
+			System.out.println("inDiffEq Property calls true");
 		}
 		else {
 			System.out.println("Property failed");
@@ -219,19 +220,28 @@ class Main {
 	}
 
 	//Function to allow multiple random calls of inDiffCar
-	public static void inDiffCarRepeat(){
+	public static void inDiffEqRepeat(){
 		int count = randomInt(0, 30);
 		while(count != 0){
-			inDiffCar(randBST(20), randBST(40));
+			inDiffEq(randBST(20), randBST(40));
 			count = count - 1;
 		}
 	}
 
-	//Third Property: the cardinality of the union of two BST are the same as
-	//the sum of the cardinalities of each BST individually
+	//Third Property: the cardinality of the union of two BSTs are the same as
+	//the sum of the cardinalities of each BST individually if they do not 
+	//contain similar elements
 	public static void unionAndCard(BST u, BST t){
-		if(u.union(t).cardinality() == u.cardinality() + t.cardinality()) {
+		BST save_u = u;
+		BST save_t = t;
+		if(u.inter(t).cardinality() != 0){
+			System.out.println("The two BSTs have similar elements, cannot be tested");
+		}
+		else if(u.union(t).cardinality() == save_u.cardinality() + save_t.cardinality()) {
 			System.out.println("unionAndCard Property holds");
+		}
+		else {
+			System.out.println("unionAndCard Property does not hold");
 		}
 	}
 
@@ -252,6 +262,9 @@ class Main {
 		if (t.subset(u)){
 			if(u.inter(t).cardinality() == save_t.cardinality()){
 				System.out.println("subCard Property holds true");
+			}
+			else{
+				System.out.println("Not a subset");
 			}
 		}
 		else {
@@ -295,30 +308,31 @@ class Main {
 		System.out.println(b_mt.cardinality() + " should be " + 0);
 		System.out.println(b_5.isEmptyHuh() + " should be " + false);
 		System.out.println(b_5.cardinality() + " should be " + 2);
+	System.out.println(b_3.empty().isEmptyHuh() + " should be " + true);
 
 		System.out.println("   ");
 
 		//addRemEq testers
-		addRemEq(b_3, 6);
+		addRemCar(b_3, 6);
 
 		System.out.println("   ");
 
-		addRemEq(b_5, 6);
+		addRemCar(b_5, 6);
 
 		System.out.println("   ");
 
-		addRemEq(b_5, 5);
+		addRemCar(b_5, 5);
 
 		System.out.println("   ");
 
-		addRemEqRepeat();
+		addRemCarRepeat();
 
 		System.out.println("   ");
 
 
 		//inDiffCar testers
-		inDiffCar(b_5, b_1);
-		inDiffCarRepeat();
+		inDiffEq(b_5, b_1);
+		inDiffEqRepeat();
 
 		System.out.println("   ");
 
